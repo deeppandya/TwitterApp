@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TwitterApp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="about_user">About user :</string>
+    <string name="tweet_text">Tweet text :</string>
+    <string name="created_at">Created at :</string>
+    <string name="user_background">User background</string>
+    <string name="search_tweets">Search tweets</string>
+    <string name="tweet_image">Tweet image</string>
+    <string name="no_location_detected">
+        No location detected. Make sure location is enabled on the device.
+    </string>
+
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core
+        functionality.
+    </string>
+    <string name="settings">Settings</string>
+    <string name="section_a">Section A</string>
+    <string name="section_b">Section B</string>
+</resources>

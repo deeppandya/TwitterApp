@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TwitterApp</string>
+    <string name="title_activity_maps">Carte</string>
+    <string name="user_avatar">Avatar de l\'utilisateur</string>
+    <string name="about_user">A propos de l\'utilisateur :</string>
+    <string name="tweet_text">Tweet le texte :</string>
+    <string name="created_at">Créé à :</string>
+    <string name="user_background">Contexte utilisateur</string>
+    <string name="search_tweets">Recherche tweets</string>
+    <string name="tweet_image">Tweet l\'image</string>
+    <string name="no_location_detected">
+        Aucun lieu détecté. Assurez-vous que l\'emplacement est activé sur le périphérique.
+    </string>
+
+    <string name="permission_rationale">L\'autorisation d\'emplacement est nécessaire pour la fonctionnalité principale</string>
+    <string name="permission_denied_explanation">
+        L\'autorisation a été refusée, mais est nécessaire pour le noyau fonctionnalité.
+    </string>
+    <string name="settings">Réglages</string>
+    <string name="section_a">Section A</string>
+    <string name="section_b">Section B</string>
+</resources>

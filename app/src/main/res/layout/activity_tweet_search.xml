@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/tabanim_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <EditText
+                android:id="@+id/etSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:hint="@string/search_tweets"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:background="@drawable/rounded_border_edittext"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:textColorHint="@android:color/darker_gray"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyle"
+                android:id="@+id/loadingProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
+
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

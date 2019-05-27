@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="16dp"
+              android:layout_height="wrap_content"
+              android:background="@android:color/background_light">
+
+    <TextView
+            android:layout_margin="8dp"
+            android:id="@+id/tv_tweet_text"
+            android:gravity="start"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:drawableRight="@drawable/ic_open_in_new_black_24dp"
+            android:drawableEnd="@drawable/ic_open_in_new_black_24dp"
+            android:drawablePadding="16dp"/>
+
+</LinearLayout>
