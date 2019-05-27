@@ -1,5 +1,7 @@
 # TwitterApp
 
+- TwitterApp supports *English* and *French* language
+
 ## Requirements :
 
 - Android API 17+ -> Lollipop and later

@@ -34,6 +34,8 @@ class TweetMapViewModel(application: Application) : AndroidViewModel(application
 
     internal var allRecentTweets: MutableLiveData<JSONArray> = MutableLiveData()
 
+    internal var emptyData: MutableLiveData<Boolean> = MutableLiveData()
+
     private val requestQueue = Volley.newRequestQueue(getApplication())
 
     val handler = Handler()
@@ -46,11 +48,11 @@ class TweetMapViewModel(application: Application) : AndroidViewModel(application
         allRecentTweets.value = JSONArray()
     }
 
-    fun loadRecentTweetData(currentLatLng: LatLng) {
+    fun loadRecentTweetData(currentLatLng: LatLng, radius: Int, language: String) {
 
         uiScope.launch {
             val searchApi =
-                "${BuildConfig.TWITTER_SEARCH_ENDPOINT}?geocode=${currentLatLng.latitude},${currentLatLng.longitude},5km&result_type=recent&count=100"
+                "${BuildConfig.TWITTER_SEARCH_ENDPOINT}?geocode=${currentLatLng.latitude},${currentLatLng.longitude},${radius}km&result_type=recent&count=100&lang=$language"
 
             callApi(searchApi)
         }
@@ -76,12 +78,18 @@ class TweetMapViewModel(application: Application) : AndroidViewModel(application
                     val searchMetadata: JSONObject? = response.getJSONObject(Utils.SEARCH_METADATA)
                     allRecentTweets.value = tweets
 
-                    handler.postDelayed({
-                        searchMetadata?.getString(Utils.NEXT_RESULTS)?.let {
-                            loadRecentTweetDataPages(it)
-                            Log.i("next_results", it)
-                        }
-                    },5000)
+                    if (tweets.length() <= 0) {
+                        emptyData.value = true
+                    }
+
+                    if (searchMetadata?.getString(Utils.NEXT_RESULTS) != null) {
+                        handler.postDelayed({
+                            searchMetadata.getString(Utils.NEXT_RESULTS)?.let {
+                                loadRecentTweetDataPages(it)
+                                Log.i("next_results", it)
+                            }
+                        }, 5000)
+                    }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }

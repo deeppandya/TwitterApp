@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener,
@@ -181,9 +183,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         mMap.setOnInfoWindowClickListener(this@MapsActivity)
         mMap.setInfoWindowAdapter(this@MapsActivity)
 
-        val currentLatLng:LatLng = if(mLastLocation!=null){
+        val currentLatLng: LatLng = if (mLastLocation != null) {
             LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude)
-        }else{
+        } else {
             LatLng(43.76503, -79.37996)
         }
 
@@ -191,7 +193,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng))
         mMap.animateCamera(cameraUpdate)
 
-        tweetMapViewModel.loadRecentTweetData(currentLatLng)
+        val language = Locale.getDefault().displayLanguage
+
+        Utils.LANGUAGE[language]?.let { tweetMapViewModel.loadRecentTweetData(currentLatLng, 5, it) }
+
+        tweetMapViewModel.emptyData.observe(this, Observer {
+            showMessage(resources.getString(R.string.no_more_tweets))
+        })
 
         tweetMapViewModel.allRecentTweets.observe(this, Observer {
 

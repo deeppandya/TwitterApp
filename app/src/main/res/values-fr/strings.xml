@@ -19,4 +19,5 @@
     <string name="settings">Réglages</string>
     <string name="section_a">Section A</string>
     <string name="section_b">Section B</string>
+    <string name="no_more_tweets">Pas plus de tweets</string>
 </resources>

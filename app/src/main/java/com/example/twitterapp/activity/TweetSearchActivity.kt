@@ -19,7 +19,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.example.twitterapp.R
+import com.example.twitterapp.Utils
 import com.example.twitterapp.adapter.TweetSearchAdapter
 import com.example.twitterapp.model.TweetModel
 import com.example.twitterapp.viewmodel.TweetSearchViewModel
@@ -48,7 +50,9 @@ class TweetSearchActivity : AppCompatActivity(), TextView.OnEditorActionListener
                     query = query.replace("#", "%23")
                 }
 
-                tweetSearchViewModel.loadTweetData(query)
+                val language = Locale.getDefault().displayLanguage
+
+                Utils.LANGUAGE[language]?.let { tweetSearchViewModel.loadTweetData(query, it) }
             }
         }
     }
@@ -57,7 +61,10 @@ class TweetSearchActivity : AppCompatActivity(), TextView.OnEditorActionListener
         return when (actionId) {
             EditorInfo.IME_ACTION_SEARCH -> {
                 loadingProgress?.visibility = View.VISIBLE
-                tweetSearchViewModel.loadTweetData(etSearchView.text.toString())
+
+                val language = Locale.getDefault().displayLanguage
+
+                Utils.LANGUAGE[language]?.let { tweetSearchViewModel.loadTweetData(etSearchView.text.toString(), it) }
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(etSearchView.windowToken, 0)
                 true
@@ -84,6 +91,10 @@ class TweetSearchActivity : AppCompatActivity(), TextView.OnEditorActionListener
 
         findViews()
         setUpViews()
+
+        tweetSearchViewModel.emptyData.observe(this, Observer {
+            Toast.makeText(this,resources.getString(R.string.no_more_tweets),Toast.LENGTH_SHORT).show()
+        })
 
         tweetSearchViewModel.allSearchTweets.observe(this, Observer {
 

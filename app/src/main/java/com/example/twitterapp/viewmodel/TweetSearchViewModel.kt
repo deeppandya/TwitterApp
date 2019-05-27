@@ -11,9 +11,6 @@ import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.twitterapp.BuildConfig
-import com.example.twitterapp.model.TweetModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,8 +18,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.HashMap
 
 class TweetSearchViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -30,20 +25,21 @@ class TweetSearchViewModel(application: Application) : AndroidViewModel(applicat
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     internal var allSearchTweets: MutableLiveData<JSONArray> = MutableLiveData()
+    internal var emptyData: MutableLiveData<Boolean> = MutableLiveData()
 
     private val requestQueue = Volley.newRequestQueue(getApplication())
 
-    val handler = Handler()
+    private val handler = Handler()
 
     companion object {
         const val TAG = "tag"
     }
 
-    fun loadTweetData(query: String) {
+    fun loadTweetData(query: String, language: String) {
 
         uiScope.launch {
             val searchApi =
-                "${BuildConfig.TWITTER_SEARCH_ENDPOINT}?q=$query&count=100"
+                "${BuildConfig.TWITTER_SEARCH_ENDPOINT}?q=$query&count=100&lang=$language"
 
             callApi(searchApi)
         }
@@ -54,6 +50,11 @@ class TweetSearchViewModel(application: Application) : AndroidViewModel(applicat
             null, Response.Listener<JSONObject> { response ->
                 try {
                     val tweets: JSONArray = response.getJSONArray("statuses")
+
+                    if (tweets.length() <= 0) {
+                        emptyData.value = true
+                    }
+
                     allSearchTweets.value = tweets
 
                 } catch (e: JSONException) {

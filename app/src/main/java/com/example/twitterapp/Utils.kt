@@ -10,6 +10,7 @@ object Utils {
     const val SEARCH_METADATA = "search_metadata"
     const val TWEET = "tweet"
     const val STATUSES = "statuses"
+    val LANGUAGE = hashMapOf("français" to "fr", "english" to "en","Français" to "fr", "English" to "en")
 
     fun getDisplayMetrics(context: Context): DisplayMetrics {
         val resources = context.resources
